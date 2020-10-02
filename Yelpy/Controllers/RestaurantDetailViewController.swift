@@ -8,7 +8,8 @@
 
 import UIKit
 import AlamofireImage
-
+import Lottie
+import SkeletonView
 
 class RestaurantDetailViewController: UIViewController {
 
@@ -21,13 +22,35 @@ class RestaurantDetailViewController: UIViewController {
     
     // Initialize restaurant variable
     var r: Restaurant!
+    var animationView: AnimationView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        startAnimations()
         
         configureOutlets()
+        Timer.scheduledTimer(timeInterval: 4, target: self, selector: #selector(self.stopAnimations), userInfo: nil, repeats: false)
     }
 
+    // ––––– Lab 4 TODO: Call animation functions to start
+    func startAnimations(){
+        animationView = .init(name: "4762-food-carousel")
+        
+        animationView!.frame = CGRect(x: 10, y: view.frame.height*1/4, width: 400, height: 400)
+        
+        animationView!.contentMode = .scaleAspectFit
+        view.addSubview(animationView!)
+        
+        animationView!.loopMode = .loop
+        animationView!.animationSpeed = 5
+        animationView!.play()
+    }
+    
+    // ––––– Lab 4 TODO: Call animation functions to stop
+    @objc func stopAnimations() {
+        animationView?.stop()
+        view.subviews.last?.removeFromSuperview()
+    }
     
     // ––––– TODO: Configure outlets :)
     func configureOutlets() {
